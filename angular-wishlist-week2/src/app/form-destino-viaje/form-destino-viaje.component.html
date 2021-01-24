@@ -5,11 +5,15 @@
     <label for="nombre">Nombre</label>
     <input type="text" class="form-control" id="nombre" placeholder="Ingresar nombre..."
       [formControl]="fg.controls['nombre']">
+      <div *ngIf=" ! fg.controls['nombre'].valid">Nombre Invalido!</div>
+      <div *ngIf=" fg.controls['nombre'].hasError('required')">Nombre requerido</div>
+      <div *ngIf=" fg.controls['nombre'].hasError('nombreFormatoInvalido')">Formato invalido</div>
+      <div *ngIf=" fg.controls['nombre'].hasError('nombreValidarLongitud')">Longitud minima al menos de {{nombreMinLongitud}}</div>
   </div>
   <div class="form-group">
     <label for="Imagen Url">Imagen Url</label>
     <input type="text" class="form-control" id="imagenurl" placeholder="Ingresar Url..."
       [formControl]="fg.controls['url']">
   </div>
-  <button type="submit" class="btn btn-primary">Guardar</button>
+  <button type="submit" class="btn btn-primary" *ngIf="fg.valid">Guardar</button>
 </form>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DestinoViaje } from '../models/destino-viaje.model';
 
 @Component({
@@ -10,11 +10,16 @@ import { DestinoViaje } from '../models/destino-viaje.model';
 export class FormDestinoViajeComponent implements OnInit {
   @Output() onItemAdded: EventEmitter<DestinoViaje>;
   fg: FormGroup;
+  nombreMinLongitud = 5;
 
   constructor(fb: FormBuilder) {
     this.onItemAdded= new EventEmitter();
     this.fg = fb.group({
-      nombre: [''],
+      nombre: ['', Validators.compose([
+        Validators.required,
+        this.validadorCustom,
+        this.validadorCustomParametrizable(this.nombreMinLongitud)
+      ])],
       url: ['']
     }
     );
@@ -34,4 +39,22 @@ export class FormDestinoViajeComponent implements OnInit {
     return false;
   }
 
+  validadorCustom(control: FormControl): { [s: string]: boolean } {
+    const len = control.value.toString().trim().length;
+    if (len >0 && len < 3){
+      return { 'nombreFormatoInvalido': true}
+    }
+    return null; //Ok
+  }
+
+  validadorCustomParametrizable(minLong: number): ValidatorFn{
+    return (control: FormControl): { [s: string]: boolean } | null => {
+      const len = control.value.toString().trim().length;
+      if (len >0 && len < minLong){
+        return { 'nombreValidarLongitud': true}
+      }
+
+      return null;
+    }
+  }
 }
