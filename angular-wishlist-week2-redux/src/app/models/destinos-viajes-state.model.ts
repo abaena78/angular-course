@@ -56,6 +56,7 @@ export class InitMyDataAction implements Action {
   constructor(public destinos: string[]) {}
 }
 
+//Une tipos de datos. Permite definir un tipo que agrupa varios tipos
 export type DestinosViajesActions = NuevoDestinoAction | ElegidoFavoritoAction
   | VoteUpAction | VoteDownAction | InitMyDataAction;
 
@@ -89,13 +90,13 @@ export function reducerDestinosViajes(
     }
     case DestinosViajesActionTypes.VOTE_UP: {
         const d: DestinoViaje = (action as VoteUpAction).destino;
-        //d.voteUp();
-        return { ...state };
+        d.voteUp();
+        return { ...state }; //clono el mismo estado. state es inmutable
     }
     case DestinosViajesActionTypes.VOTE_DOWN: {
         const d: DestinoViaje = (action as VoteDownAction).destino;
-        //d.voteDown();
-        return { ...state };
+        d.voteDown();
+        return { ...state }; //clono el mismo estado. state es inmutable
     }
   }
   return state;
