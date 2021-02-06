@@ -20,6 +20,8 @@ import {
   reducerDestinosViajes,
   initializeDestinosViajesState,
   DestinosViajesEffects} from './models/destinos-viajes-state.model';
+import { LoginComponent } from './components/login/login/login.component';
+import { ProtectedComponent } from './components/protected/protected/protected.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch : 'full'},
@@ -51,7 +53,9 @@ let reducersInitialState = {
     AppComponent,
     DestinoViajeComponent,
     ListaDestinosComponent,
-    FormDestinoViajeComponent
+    FormDestinoViajeComponent,
+    LoginComponent,
+    ProtectedComponent
   ],
   imports: [
     BrowserModule,
